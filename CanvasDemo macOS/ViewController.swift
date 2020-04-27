@@ -17,7 +17,6 @@ enum Shape: String, CaseIterable {
     case rect
     case pencil
     case pencil2
-    case text
     case protractor
     case cirdist
     
@@ -29,7 +28,6 @@ enum Shape: String, CaseIterable {
         case .rect:         return RectItem.self
         case .pencil:       return PencilItem.self
         case .pencil2:      return PencilItem2.self
-        case .text:         return TextItem.self
         case .protractor:   return ProtractorItem.self
         case .cirdist:      return CirdistItem.self
         }
@@ -81,7 +79,7 @@ class ViewController: NSViewController {
         deleteButton.isEnabled = !canvasView.selectedItemIndexes.isEmpty
         undoButton.isEnabled = undoManager?.canUndo ?? false
         redoButton.isEnabled = undoManager?.canRedo ?? false
-        if let idx = selectedItemIndex, let item = canvasView.items[idx] as? TextItem {
+        if let idx = selectedItemIndex, let item = canvasView.items[idx] as? RectItem {
             textField.stringValue = item.text
             textField.isEnabled = true
         } else {
@@ -111,7 +109,7 @@ class ViewController: NSViewController {
     }
     
     @IBAction func textChanged(_ sender: NSTextField) {
-        if let idx = selectedItemIndex, let item = canvasView.items[idx] as? TextItem {
+        if let idx = selectedItemIndex, let item = canvasView.items[idx] as? RectItem {
             item.text = sender.stringValue
         }
     }
