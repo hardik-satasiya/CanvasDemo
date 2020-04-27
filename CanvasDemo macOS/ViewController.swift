@@ -14,6 +14,7 @@ enum Shape: String, CaseIterable {
     case line
     case polyline
     case circle
+    case rect
     case pencil
     case pencil2
     case text
@@ -25,6 +26,7 @@ enum Shape: String, CaseIterable {
         case .line:         return LineItem.self
         case .polyline:     return PolylineItem.self
         case .circle:       return CircleItem.self
+        case .rect:         return RectItem.self
         case .pencil:       return PencilItem.self
         case .pencil2:      return PencilItem2.self
         case .text:         return TextItem.self

@@ -22,7 +22,7 @@ class CirdistItem: FixedItem {
     }
     
     override func push(_ point: CGPoint) {
-        if grid.last == nil { super.push(point) }
+        if isEmpty { super.push(point) }
         super.push(point)
     }
     
