@@ -79,13 +79,13 @@ class ViewController: NSViewController {
         deleteButton.isEnabled = !canvasView.selectedItemIndexes.isEmpty
         undoButton.isEnabled = undoManager?.canUndo ?? false
         redoButton.isEnabled = undoManager?.canRedo ?? false
-//        if let idx = selectedItemIndex, let item = canvasView.items[idx] as? TextPresentable {
-//            textField.stringValue = item.string?.string ?? ""
-//            textField.isEnabled = true
-//        } else {
-//            textField.stringValue = ""
-//            textField.isEnabled = false
-//        }
+        if let idx = selectedItemIndex, let item = canvasView.items[idx] as? TextItem {
+            textField.stringValue = item.text
+            textField.isEnabled = true
+        } else {
+            textField.stringValue = ""
+            textField.isEnabled = false
+        }
     }
     
     // MARK: - Actions
@@ -109,9 +109,9 @@ class ViewController: NSViewController {
     }
     
     @IBAction func textChanged(_ sender: NSTextField) {
-//        if let idx = selectedItemIndex, let item = canvasView.items[idx] as? TextPresentable {
-//            item.string = NSAttributedString(string: sender.stringValue)
-//        }
+        if let idx = selectedItemIndex, let item = canvasView.items[idx] as? TextItem {
+            item.text = sender.stringValue
+        }
     }
     
 }
