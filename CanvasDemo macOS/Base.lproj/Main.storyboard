@@ -706,20 +706,20 @@
             <objects>
                 <viewController id="XfG-lQ-9wD" customClass="ViewController" customModule="CanvasDemo_macOS" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="m2S-Jp-Qdl">
-                        <rect key="frame" x="0.0" y="0.0" width="442" height="372"/>
+                        <rect key="frame" x="0.0" y="0.0" width="470" height="372"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <stackView distribution="fill" orientation="horizontal" alignment="top" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="64q-SJ-doU">
-                                <rect key="frame" x="0.0" y="0.0" width="442" height="372"/>
+                                <rect key="frame" x="0.0" y="0.0" width="470" height="372"/>
                                 <subviews>
                                     <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="30" horizontalPageScroll="10" verticalLineScroll="30" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dbr-nl-6dC">
-                                        <rect key="frame" x="0.0" y="90" width="100" height="282"/>
+                                        <rect key="frame" x="0.0" y="96" width="100" height="276"/>
                                         <clipView key="contentView" id="QQu-6r-ab1">
-                                            <rect key="frame" x="0.0" y="0.0" width="100" height="282"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="100" height="276"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" selectionHighlightStyle="none" alternatingRowBackgroundColors="YES" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="29" viewBased="YES" id="LUD-7e-Ozj">
-                                                    <rect key="frame" x="0.0" y="0.0" width="100" height="282"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="100" height="276"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <size key="intercellSpacing" width="3" height="1"/>
                                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -783,10 +783,10 @@
                                         <rect key="frame" x="98" y="276" width="5" height="96"/>
                                     </box>
                                     <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="m5x-xD-D02">
-                                        <rect key="frame" x="101" y="0.0" width="341" height="372"/>
+                                        <rect key="frame" x="101" y="0.0" width="369" height="372"/>
                                         <subviews>
                                             <stackView distribution="fill" orientation="horizontal" alignment="centerY" spacing="4" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UDw-EE-9ei">
-                                                <rect key="frame" x="0.0" y="343" width="341" height="29"/>
+                                                <rect key="frame" x="0.0" y="343" width="369" height="29"/>
                                                 <subviews>
                                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="kQX-EK-pxv">
                                                         <rect key="frame" x="4" y="4" width="21" height="21"/>
@@ -854,8 +854,15 @@ CA
                                                             <action selector="redo:" target="XfG-lQ-9wD" id="QFV-8X-ffn"/>
                                                         </connections>
                                                     </button>
+                                                    <slider horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Qql-RB-waT">
+                                                        <rect key="frame" x="102" y="0.0" width="28" height="30"/>
+                                                        <sliderCell key="cell" continuous="YES" alignment="left" maxValue="360" allowsTickMarkValuesOnly="YES" sliderType="circular" id="YOJ-Tl-z2s"/>
+                                                        <connections>
+                                                            <action selector="rotationAngleChanged:" target="XfG-lQ-9wD" id="Keb-u0-OUM"/>
+                                                        </connections>
+                                                    </slider>
                                                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="k4Q-8A-IwE">
-                                                        <rect key="frame" x="104" y="4" width="233" height="21"/>
+                                                        <rect key="frame" x="132" y="4" width="233" height="21"/>
                                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="iKg-lZ-6EM">
                                                             <font key="font" metaFont="system"/>
                                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -876,8 +883,10 @@ CA
                                                     <integer value="1000"/>
                                                     <integer value="1000"/>
                                                     <integer value="1000"/>
+                                                    <integer value="1000"/>
                                                 </visibilityPriorities>
                                                 <customSpacing>
+                                                    <real value="3.4028234663852886e+38"/>
                                                     <real value="3.4028234663852886e+38"/>
                                                     <real value="3.4028234663852886e+38"/>
                                                     <real value="3.4028234663852886e+38"/>
@@ -943,6 +952,7 @@ CA
                         <outlet property="cursorButton" destination="kQX-EK-pxv" id="20O-8g-gKJ"/>
                         <outlet property="deleteButton" destination="hAh-7h-bYE" id="AuG-pM-r4N"/>
                         <outlet property="redoButton" destination="w0p-0e-v3d" id="aOk-LA-l4O"/>
+                        <outlet property="rotationSlider" destination="Qql-RB-waT" id="srr-4H-mVw"/>
                         <outlet property="tableView" destination="LUD-7e-Ozj" id="b3Z-rG-hA3"/>
                         <outlet property="textField" destination="k4Q-8A-IwE" id="7v2-3r-VlL"/>
                         <outlet property="undoButton" destination="ibe-4X-wdH" id="1O4-4U-Blb"/>

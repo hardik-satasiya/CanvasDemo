@@ -43,6 +43,7 @@ class ViewController: NSViewController {
     @IBOutlet weak var undoButton: NSButton!
     @IBOutlet weak var redoButton: NSButton!
     @IBOutlet weak var textField: NSTextField!
+    @IBOutlet weak var rotationSlider: NSSlider!
     
     var selectedRow: Int? { tableView.selectedRow != -1 ? tableView.selectedRow : nil }
     var selectedItemIndex: Int? { canvasView.selectedItemIndexes.count == 1 ? canvasView.selectedItemIndexes.first : nil }
@@ -52,6 +53,8 @@ class ViewController: NSViewController {
         setUpTableView()
         setUpObservers()
         updateUI()
+        rotationSlider.scaleUnitSquare(to: NSSize(width: -1, height: 1))
+        rotationSlider.rotate(byDegrees: -90)
     }
     
     func setUpTableView() {
@@ -79,12 +82,17 @@ class ViewController: NSViewController {
         deleteButton.isEnabled = !canvasView.selectedItemIndexes.isEmpty
         undoButton.isEnabled = undoManager?.canUndo ?? false
         redoButton.isEnabled = undoManager?.canRedo ?? false
-        if let idx = selectedItemIndex, let item = canvasView.items[idx] as? RectItem {
-            textField.stringValue = item.text
-            textField.isEnabled = true
+        if let idx = selectedItemIndex {
+            let item = canvasView.items[idx]
+            rotationSlider.isEnabled = true
+            rotationSlider.integerValue = Int(radiansToDegrees(item.rotationAngle))
+            textField.isEnabled = item is RectItem
+            textField.stringValue = (item as? RectItem)?.text ?? ""
         } else {
-            textField.stringValue = ""
+            rotationSlider.isEnabled = false
+            rotationSlider.integerValue = 0
             textField.isEnabled = false
+            textField.stringValue = ""
         }
     }
     
@@ -111,6 +119,13 @@ class ViewController: NSViewController {
     @IBAction func textChanged(_ sender: NSTextField) {
         if let idx = selectedItemIndex, let item = canvasView.items[idx] as? RectItem {
             item.text = sender.stringValue
+        }
+    }
+    
+    @IBAction func rotationAngleChanged(_ sender: NSSlider) {
+        if let idx = selectedItemIndex {
+            let angle = degreesToRadians(CGFloat(sender.integerValue))
+            canvasView.items[idx].rotate(angle)
         }
     }
     

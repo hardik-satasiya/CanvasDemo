@@ -3,10 +3,10 @@
     "pins": [
       {
         "package": "Canvas",
-        "repositoryURL": "https://github.com/scchn/canvas",
+        "repositoryURL": "https://github.com/scchn/Canvas.git",
         "state": {
           "branch": "master",
-          "revision": "3d3290dc9cc39b75cfa438f0885181550d1b3011",
+          "revision": "fd61ad9dc2b9a2fb67b0827d5670635caf6c4488",
           "version": null
         }
       }
