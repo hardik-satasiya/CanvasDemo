@@ -42,8 +42,9 @@ class ViewController: NSViewController {
     @IBOutlet weak var canvasView: CanvasView!
     @IBOutlet weak var undoButton: NSButton!
     @IBOutlet weak var redoButton: NSButton!
-    @IBOutlet weak var textField: NSTextField!
+    @IBOutlet weak var colorWell: NSColorWell!
     @IBOutlet weak var rotationSlider: NSSlider!
+    @IBOutlet weak var textField: NSTextField!
     
     var selectedRow: Int? { tableView.selectedRow != -1 ? tableView.selectedRow : nil }
     var selectedItemIndex: Int? { canvasView.selectedItemIndexes.count == 1 ? canvasView.selectedItemIndexes.first : nil }
@@ -64,16 +65,7 @@ class ViewController: NSViewController {
     
     func setUpObservers() {
         let notCenter = NotificationCenter.default
-        notCenter.addObserver(forName: .canvasViewDidEndSession, object: nil, queue: .main) { _ in
-            self.updateUI()
-        }
-        notCenter.addObserver(forName: .canvasViewDidCancelSession, object: nil, queue: .main) { _ in
-            self.updateUI()
-        }
-        notCenter.addObserver(forName: .canvasViewDidDragItems, object: nil, queue: .main) { _ in
-            self.updateUI()
-        }
-        notCenter.addObserver(forName: .canvasViewDidChangeSelection, object: nil, queue: .main) { _ in
+        notCenter.addObserver(forName: .canvasViewSelectionDidChange, object: nil, queue: .main) { _ in
             self.updateUI()
         }
     }
@@ -84,11 +76,13 @@ class ViewController: NSViewController {
         redoButton.isEnabled = undoManager?.canRedo ?? false
         if let idx = selectedItemIndex {
             let item = canvasView.items[idx]
+            colorWell.color = item.strokeColor
             rotationSlider.isEnabled = true
             rotationSlider.integerValue = Int(radiansToDegrees(item.rotationAngle))
             textField.isEnabled = item is RectItem
             textField.stringValue = (item as? RectItem)?.text ?? ""
         } else {
+            colorWell.color = canvasView.strokeColor
             rotationSlider.isEnabled = false
             rotationSlider.integerValue = 0
             textField.isEnabled = false
@@ -116,9 +110,11 @@ class ViewController: NSViewController {
         updateUI()
     }
     
-    @IBAction func textChanged(_ sender: NSTextField) {
-        if let idx = selectedItemIndex, let item = canvasView.items[idx] as? RectItem {
-            item.text = sender.stringValue
+    @IBAction func colorChanged(_ sender: NSColorWell) {
+        if let idx = selectedItemIndex {
+            canvasView.items[idx].strokeColor = sender.color
+        } else {
+            canvasView.strokeColor = sender.color
         }
     }
     
@@ -126,6 +122,12 @@ class ViewController: NSViewController {
         if let idx = selectedItemIndex {
             let angle = degreesToRadians(CGFloat(sender.integerValue))
             canvasView.items[idx].rotate(angle)
+        }
+    }
+    
+    @IBAction func textChanged(_ sender: NSTextField) {
+        if let idx = selectedItemIndex, let item = canvasView.items[idx] as? RectItem {
+            item.text = sender.stringValue
         }
     }
     
@@ -141,7 +143,7 @@ extension ViewController: NSTableViewDataSource, NSTableViewDelegate {
         let shape = Shape.allCases[row]
         rowView?.setUp(shape)
         rowView?.clickHandler = { [weak self] in
-            self?.canvasView.beginDrawingSession(type: shape.canvasItemType())
+            self?.canvasView.beginDrawingSession(shape.canvasItemType())
         }
         return rowView
     }

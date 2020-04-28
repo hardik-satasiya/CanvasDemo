@@ -23,7 +23,7 @@ class ViewController: UIViewController {
         
         updateUI()
         
-        canvasView.beginDrawingSession(type: PencilItem2.self)
+        canvasView.beginDrawingSession(PencilItem2.self)
     }
     
     func setUpCanvasView() {
@@ -32,8 +32,8 @@ class ViewController: UIViewController {
     
     func setUpObservers() {
         let notCenter = NotificationCenter.default
-        notCenter.addObserver(forName: .canvasViewDidEndSession, object: nil, queue: .main) { _ in
-            self.canvasView.beginDrawingSession(type: PencilItem2.self)
+        notCenter.addObserver(forName: .canvasViewDrawingSessionDidEnd, object: nil, queue: .main) { _ in
+            self.canvasView.beginDrawingSession(PencilItem2.self)
             self.updateUI()
         }
     }
@@ -45,7 +45,7 @@ class ViewController: UIViewController {
     
     @IBAction func undo(_ sender: Any) {
         undoManager?.undo()
-        canvasView.beginDrawingSession(type: PencilItem2.self)
+        canvasView.beginDrawingSession(PencilItem2.self)
         updateUI()
     }
     
