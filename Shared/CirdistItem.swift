@@ -83,15 +83,17 @@ class CirdistItem: FixedElementItem, Fallbackable {
     override func mainPathWrappers() -> [PathWrapper] {
         updateCircles()
         
-        let circlePaths = circles.reduce([PathWrapper]()) { (paths, circle)  in
-            paths + [
-                PathWrapper(method: .stroke(lineWidth), color: strokeColor) { $0.addCircle(circle) },
-                PathWrapper(method: .fill, color: strokeColor) { $0.addCircle(Circle(center: circle.center, radius: 3)) }
-            ]
+        let pathOfCircles = PathWrapper(method: .stroke(lineWidth), color: strokeColor) { path in
+            circles.forEach(path.addCircle)
+        }
+        let pathOfCenters = PathWrapper(method: .fill, color: .darkGray) { path in
+            circles
+                .map { Circle(center: $0.center, radius: 3) }
+                .forEach(path.addCircle(_:))
         }
         let linePath = PathWrapper(method: .stroke(lineWidth), color: strokeColor) { path in lines.forEach(path.addLine) }
         
-        return circlePaths + [linePath]
+        return [linePath, pathOfCenters, pathOfCircles]
     }
     
     override func canSelect(by rect: CGRect) -> Bool {
