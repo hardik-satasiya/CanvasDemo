@@ -11,14 +11,14 @@ import CoreGraphics
 
 import Canvas
 
-class CirdistItem: FixedItem {
+class CirdistItem: FixedElementItem, Fallbackable {
     
     private(set) var circles: [Circle] = []
     
-    private var line: Line = .zero
+    private var lines: [Line] = []
     
     required init() {
-        super.init(elements: 4, segments: 2)
+        super.init(elements: 4, minSegments: 2)
     }
     
     override func push(_ point: CGPoint) {
@@ -34,23 +34,24 @@ class CirdistItem: FixedItem {
         else {
             super.push(toNextSegment: point)
         }
+        super.push(toNextSegment: point)
+        if grid.last?.count == elements {
+            super.push(point)
+        }
     }
     
     func updateCircles() {
         circles = grid
             .filter{ $0.count == elements }
-            .enumerated()
-            .compactMap { i, points in
-                let circle = Circle(points[1], points[2], points[3])
-                if let center = circle?.center {
-                    super.update(point: center, at: StackIndex(element: 0, segment: i))
-                } else {
-                    super.update(point: .zero, at: StackIndex(element: 0, segment: i))
-                }
-                return circle
-        }
-        if circles.count == 2 {
-            line = Line(from: circles[0].center, to: circles[1].center)
+            .compactMap { Circle($0[1], $0[2], $0[3]) }
+        circles.enumerated()
+            .map { (StackIndex(element: 0, segment: $0), $1.center) }
+            .forEach { super.update(point: $1, at: $0) }
+        
+        if circles.count >= 2 {
+            lines = circles.dropLast().enumerated().map { i, circle in
+                Line(from: circle.center, to: circles[i + 1].center)
+            }
         }
     }
     
@@ -71,35 +72,30 @@ class CirdistItem: FixedItem {
     }
     
     override func linePathWrappers() -> [PathWrapper] {
-        grid
-            .filter { $0.count > 1 }
-            .map { Array($0.dropFirst()) }
-            .enumerated()
-            .map { i, points in
-                PathWrapper(method: .dash(lineWidth, 2, [2, 2]), color: strokeColor) { $0.addLines(between: points) }
+        grid.filter { $0.count > 1 }
+            .map { points in
+                PathWrapper(method: .dash(lineWidth, 2, [2, 2]), color: strokeColor) {
+                    $0.addLines(between: Array(points.dropFirst()))
+                }
             }
     }
     
     override func mainPathWrappers() -> [PathWrapper] {
         updateCircles()
         
-        let circlePaths = circles.map { circle in
-            PathWrapper(method: .stroke(lineWidth), color: strokeColor) { $0.addCircle(circle) }
+        let circlePaths = circles.reduce([PathWrapper]()) { (paths, circle)  in
+            paths + [
+                PathWrapper(method: .stroke(lineWidth), color: strokeColor) { $0.addCircle(circle) },
+                PathWrapper(method: .fill, color: strokeColor) { $0.addCircle(Circle(center: circle.center, radius: 3)) }
+            ]
         }
-        let centerPaths = circles.map { circle in
-            PathWrapper(method: .fill, color: strokeColor) {
-                var circle = circle
-                circle.radius = 3
-                $0.addCircle(circle)
-            }
-        }
-        let linePaths = (line == .zero ? [] : [PathWrapper(method: .stroke(lineWidth), color: strokeColor) { $0.addLine(line) }])
+        let linePath = PathWrapper(method: .stroke(lineWidth), color: strokeColor) { path in lines.forEach(path.addLine) }
         
-        return circlePaths + centerPaths + linePaths
+        return circlePaths + [linePath]
     }
     
     override func canSelect(by rect: CGRect) -> Bool {
-        circles.contains { $0.canSelect(by: rect) } || (line == .zero ? false : line.canSelect(by: rect))
+        circles.contains { $0.canSelect(by: rect) } || lines.contains { $0.canSelect(by: rect) }
     }
     
 }
