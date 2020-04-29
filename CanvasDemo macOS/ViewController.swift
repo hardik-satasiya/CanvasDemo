@@ -51,20 +51,27 @@ class ViewController: NSViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setUpTableView()
+        setUpUI()
         setUpObservers()
         updateUI()
-        rotationSlider.scaleUnitSquare(to: NSSize(width: -1, height: 1))
-        rotationSlider.rotate(byDegrees: -90)
     }
     
-    func setUpTableView() {
+    func setUpUI() {
         tableView.delegate = self
         tableView.dataSource = self
+        rotationSlider.scaleUnitSquare(to: NSSize(width: -1, height: 1))
+        rotationSlider.rotate(byDegrees: -90)
+        canvasView.delegate = self
     }
     
     func setUpObservers() {
         let notCenter = NotificationCenter.default
+        notCenter.addObserver(forName: .canvasViewDrawingSessionDidEnd, object: nil, queue: .main) { _ in
+            self.updateUI()
+        }
+        notCenter.addObserver(forName: .canvasViewItemDidEndEditing, object: nil, queue: .main) { _ in
+            self.updateUI()
+        }
         notCenter.addObserver(forName: .canvasViewSelectionDidChange, object: nil, queue: .main) { _ in
             self.updateUI()
         }
@@ -129,6 +136,42 @@ class ViewController: NSViewController {
         if let idx = selectedItemIndex, let item = canvasView.items[idx] as? RectItem {
             item.text = sender.stringValue
         }
+    }
+    
+    @objc func clearItems(_ sender: NSMenuItem) {
+        canvasView.removeAllItems()
+    }
+    
+    @objc func clearEverything(_ sender: NSMenuItem) {
+        canvasView.removeAllItems()
+        undoManager?.removeAllActions()
+    }
+    
+    @objc func deleteSelection(_ sender: NSMenuItem) {
+        canvasView.removeItems(at: canvasView.selectedItemIndexes)
+    }
+    
+}
+
+extension ViewController: CanvasViewDelegate {
+    
+    func menu(for canvasView: CanvasView) -> NSMenu? {
+        let menu = NSMenu()
+        let hasItems = !canvasView.items.isEmpty, canUndo = undoManager?.canUndo ?? false, canRedo = undoManager?.canRedo ?? false
+        let canClearAll = hasItems || canUndo || canRedo
+        menu.addItem(withTitle: "Clear", action: hasItems ? #selector(clearItems) : nil, keyEquivalent: "")
+        menu.addItem(withTitle: "Clear(All)", action: canClearAll ? #selector(clearEverything(_:)) : nil, keyEquivalent: "")
+        menu.addItem(.separator())
+        menu.addItem(withTitle: "Undo", action: canUndo ? #selector(undo(_:)) : nil, keyEquivalent: "")
+        menu.addItem(withTitle: "Redo", action: canRedo ? #selector(redo(_:)) : nil, keyEquivalent: "")
+        return menu
+    }
+    
+    func menuForItems(in canvasView: CanvasView, at indexes: IndexSet) -> NSMenu? {
+        let menu = NSMenu()
+        menu.addItem(withTitle: "Delete \(indexes.count) Item\(indexes.count > 1 ? "s" : "")", action: #selector(deleteSelection), keyEquivalent: "")
+        menu.items.first?.representedObject = index
+        return menu
     }
     
 }
