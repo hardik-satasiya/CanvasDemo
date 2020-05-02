@@ -43,6 +43,7 @@ class ViewController: NSViewController {
     @IBOutlet weak var undoButton: NSButton!
     @IBOutlet weak var redoButton: NSButton!
     @IBOutlet weak var colorWell: NSColorWell!
+    @IBOutlet weak var rotationSwitch: NSButton!
     @IBOutlet weak var rotationSlider: NSSlider!
     @IBOutlet weak var textField: NSTextField!
     
@@ -75,16 +76,20 @@ class ViewController: NSViewController {
         notCenter.addObserver(forName: .canvasViewSelectionDidChange, object: nil, queue: .main) { _ in
             self.updateUI()
         }
+        notCenter.addObserver(forName: .NSUndoManagerCheckpoint, object: nil, queue: .main) { _ in
+            self.updateUI()
+        }
     }
     
     func updateUI() {
         deleteButton.isEnabled = !canvasView.selectedItemIndexes.isEmpty
         undoButton.isEnabled = undoManager?.canUndo ?? false
         redoButton.isEnabled = undoManager?.canRedo ?? false
+        rotationSwitch.state = canvasView.canRotateItem ? .on : .off
         if let idx = selectedItemIndex {
             let item = canvasView.items[idx]
             colorWell.color = item.strokeColor
-            rotationSlider.isEnabled = true
+            rotationSlider.isEnabled = canvasView.canRotateItem
             rotationSlider.integerValue = Int(radiansToDegrees(item.rotationAngle))
             textField.isEnabled = item is RectItem
             textField.stringValue = (item as? RectItem)?.text ?? ""
@@ -123,6 +128,10 @@ class ViewController: NSViewController {
         } else {
             canvasView.strokeColor = sender.color
         }
+    }
+    
+    @IBAction func rotationSwitchValueChanged(_ sender: NSButton) {
+        canvasView.canRotateItem = sender.state == .on
     }
     
     @IBAction func rotationAngleChanged(_ sender: NSSlider) {
