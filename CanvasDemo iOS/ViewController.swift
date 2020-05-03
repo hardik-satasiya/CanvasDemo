@@ -32,7 +32,7 @@ class ViewController: UIViewController {
     
     func setUpObservers() {
         let notCenter = NotificationCenter.default
-        notCenter.addObserver(forName: .canvasViewDrawingSessionDidEnd, object: nil, queue: .main) { _ in
+        notCenter.addObserver(forName: .canvasViewSessionDidFinish, object: nil, queue: .main) { _ in
             self.canvasView.beginDrawingSession(PencilItem2.self)
             self.updateUI()
         }

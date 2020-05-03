@@ -62,12 +62,16 @@ class ViewController: NSViewController {
         tableView.dataSource = self
         rotationSlider.scaleUnitSquare(to: NSSize(width: -1, height: 1))
         rotationSlider.rotate(byDegrees: -90)
+        canvasView.layer?.backgroundColor = .white
         canvasView.delegate = self
     }
     
     func setUpObservers() {
         let notCenter = NotificationCenter.default
-        notCenter.addObserver(forName: .canvasViewDrawingSessionDidEnd, object: nil, queue: .main) { _ in
+        notCenter.addObserver(forName: .canvasViewSessionDidFinish, object: nil, queue: .main) { _ in
+            self.updateUI()
+        }
+        notCenter.addObserver(forName: .canvasViewSessionDidCancel, object: nil, queue: .main) { _ in
             self.updateUI()
         }
         notCenter.addObserver(forName: .canvasViewItemDidEndEditing, object: nil, queue: .main) { _ in
