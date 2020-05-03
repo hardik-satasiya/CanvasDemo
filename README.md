@@ -1,3 +1,3 @@
 # Canvas Demo
 
-<img src="https://media.giphy.com/media/J5FSQSp9jtUhl7fVAd/giphy.gif" />
+<img src="https://media.giphy.com/media/ZDtxsNjwhBLMQF7EB8/giphy.gif" />
