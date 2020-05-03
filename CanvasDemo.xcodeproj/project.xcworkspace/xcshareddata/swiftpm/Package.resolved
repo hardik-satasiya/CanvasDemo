@@ -3,20 +3,11 @@
     "pins": [
       {
         "package": "Canvas",
-        "repositoryURL": "https://github.com/scchn/canvas",
+        "repositoryURL": "https://github.com/scchn/Canvas",
         "state": {
           "branch": null,
-          "revision": "d9ac0c7129dcc88e9333a985822527febd7ac811",
+          "revision": "e2096300c6d9e68d8e2a069fda5b0b03474ec2ed",
           "version": "1.1.0"
-        }
-      },
-      {
-        "package": "RxSwift",
-        "repositoryURL": "https://github.com/ReactiveX/RxSwift.git",
-        "state": {
-          "branch": null,
-          "revision": "002d325b0bdee94e7882e1114af5ff4fe1e96afa",
-          "version": "5.1.1"
         }
       }
     ]

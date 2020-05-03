@@ -44,7 +44,6 @@ class ViewController: NSViewController {
     @IBOutlet weak var redoButton: NSButton!
     @IBOutlet weak var colorWell: NSColorWell!
     @IBOutlet weak var rotationSwitch: NSButton!
-    @IBOutlet weak var rotationResetButton: NSButton!
     
     var selectedRow: Int? { tableView.selectedRow != -1 ? tableView.selectedRow : nil }
     var selectedItemIndex: Int? { canvasView.selectedItemIndexes.count == 1 ? canvasView.selectedItemIndexes.first : nil }
@@ -83,10 +82,8 @@ class ViewController: NSViewController {
         if let idx = selectedItemIndex {
             let item = canvasView.items[idx]
             colorWell.color = item.strokeColor
-            rotationResetButton.isHidden = !canvasView.canRotateItem
         } else {
             colorWell.color = canvasView.strokeColor
-            rotationResetButton.isHidden = true
         }
     }
     
@@ -120,12 +117,6 @@ class ViewController: NSViewController {
     
     @IBAction func rotationSwitchValueChanged(_ sender: NSButton) {
         canvasView.canRotateItem = sender.state == .on
-    }
-    
-    @IBAction func resetRotation(_ sender: Any) {
-        if let idx = selectedItemIndex {
-            canvasView.items[idx].rotate(0)
-        }
     }
     
     @objc func clearItems(_ sender: NSMenuItem) {

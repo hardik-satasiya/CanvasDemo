@@ -714,13 +714,13 @@
                                 <rect key="frame" x="0.0" y="0.0" width="480" height="372"/>
                                 <subviews>
                                     <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="30" horizontalPageScroll="10" verticalLineScroll="30" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dbr-nl-6dC">
-                                        <rect key="frame" x="0.0" y="128" width="100" height="244"/>
+                                        <rect key="frame" x="0.0" y="131" width="100" height="241"/>
                                         <clipView key="contentView" id="QQu-6r-ab1">
-                                            <rect key="frame" x="0.0" y="0.0" width="100" height="244"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="100" height="241"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" selectionHighlightStyle="none" alternatingRowBackgroundColors="YES" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="29" viewBased="YES" id="LUD-7e-Ozj">
-                                                    <rect key="frame" x="0.0" y="0.0" width="100" height="244"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="100" height="241"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <size key="intercellSpacing" width="3" height="1"/>
                                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -787,7 +787,7 @@
                                         <rect key="frame" x="101" y="0.0" width="379" height="372"/>
                                         <subviews>
                                             <stackView distribution="fill" orientation="horizontal" alignment="centerY" spacing="4" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UDw-EE-9ei">
-                                                <rect key="frame" x="0.0" y="343" width="295" height="29"/>
+                                                <rect key="frame" x="0.0" y="343" width="228" height="29"/>
                                                 <subviews>
                                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="kQX-EK-pxv">
                                                         <rect key="frame" x="4" y="4" width="21" height="21"/>
@@ -882,16 +882,6 @@ CA
                                                             <action selector="rotationSwitchValueChanged:" target="XfG-lQ-9wD" id="UWy-aX-4DI"/>
                                                         </connections>
                                                     </button>
-                                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="z0U-Ho-xyw">
-                                                        <rect key="frame" x="222" y="-3" width="75" height="32"/>
-                                                        <buttonCell key="cell" type="push" title="Reset" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="pkb-vg-QMv">
-                                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                            <font key="font" metaFont="system"/>
-                                                        </buttonCell>
-                                                        <connections>
-                                                            <action selector="resetRotation:" target="XfG-lQ-9wD" id="p0G-bD-tTy"/>
-                                                        </connections>
-                                                    </button>
                                                 </subviews>
                                                 <edgeInsets key="edgeInsets" left="4" right="4" top="0.0" bottom="0.0"/>
                                                 <constraints>
@@ -905,10 +895,8 @@ CA
                                                     <integer value="1000"/>
                                                     <integer value="1000"/>
                                                     <integer value="1000"/>
-                                                    <integer value="1000"/>
                                                 </visibilityPriorities>
                                                 <customSpacing>
-                                                    <real value="3.4028234663852886e+38"/>
                                                     <real value="3.4028234663852886e+38"/>
                                                     <real value="3.4028234663852886e+38"/>
                                                     <real value="3.4028234663852886e+38"/>
@@ -974,7 +962,6 @@ CA
                         <outlet property="cursorButton" destination="kQX-EK-pxv" id="20O-8g-gKJ"/>
                         <outlet property="deleteButton" destination="hAh-7h-bYE" id="AuG-pM-r4N"/>
                         <outlet property="redoButton" destination="w0p-0e-v3d" id="aOk-LA-l4O"/>
-                        <outlet property="rotationResetButton" destination="z0U-Ho-xyw" id="rS1-CS-P6o"/>
                         <outlet property="rotationSwitch" destination="PEO-wa-lY2" id="aqq-A0-P9o"/>
                         <outlet property="tableView" destination="LUD-7e-Ozj" id="b3Z-rG-hA3"/>
                         <outlet property="undoButton" destination="ibe-4X-wdH" id="1O4-4U-Blb"/>
