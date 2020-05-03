@@ -687,8 +687,9 @@
                     <window key="window" title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="IQv-IB-iLA">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-                        <rect key="contentRect" x="196" y="240" width="480" height="270"/>
+                        <rect key="contentRect" x="196" y="240" width="400" height="200"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
+                        <value key="minSize" type="size" width="400" height="200"/>
                         <connections>
                             <outlet property="delegate" destination="B8D-0N-5wS" id="98r-iN-zZc"/>
                         </connections>
@@ -713,13 +714,13 @@
                                 <rect key="frame" x="0.0" y="0.0" width="480" height="372"/>
                                 <subviews>
                                     <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="30" horizontalPageScroll="10" verticalLineScroll="30" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dbr-nl-6dC">
-                                        <rect key="frame" x="0.0" y="117" width="100" height="255"/>
+                                        <rect key="frame" x="0.0" y="128" width="100" height="244"/>
                                         <clipView key="contentView" id="QQu-6r-ab1">
-                                            <rect key="frame" x="0.0" y="0.0" width="100" height="255"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="100" height="244"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" selectionHighlightStyle="none" alternatingRowBackgroundColors="YES" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="29" viewBased="YES" id="LUD-7e-Ozj">
-                                                    <rect key="frame" x="0.0" y="0.0" width="100" height="255"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="100" height="244"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <size key="intercellSpacing" width="3" height="1"/>
                                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -786,7 +787,7 @@
                                         <rect key="frame" x="101" y="0.0" width="379" height="372"/>
                                         <subviews>
                                             <stackView distribution="fill" orientation="horizontal" alignment="centerY" spacing="4" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UDw-EE-9ei">
-                                                <rect key="frame" x="0.0" y="343" width="351" height="29"/>
+                                                <rect key="frame" x="0.0" y="343" width="295" height="29"/>
                                                 <subviews>
                                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="kQX-EK-pxv">
                                                         <rect key="frame" x="4" y="4" width="21" height="21"/>
@@ -865,8 +866,14 @@ CA
                                                             <action selector="colorChanged:" target="XfG-lQ-9wD" id="ba5-G2-aAN"/>
                                                         </connections>
                                                     </colorWell>
+                                                    <box horizontalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="qJY-Za-6NN">
+                                                        <rect key="frame" x="148" y="4" width="5" height="21"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="21" id="qQb-EI-Khh"/>
+                                                        </constraints>
+                                                    </box>
                                                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="PEO-wa-lY2">
-                                                        <rect key="frame" x="148" y="6" width="73" height="18"/>
+                                                        <rect key="frame" x="153" y="6" width="73" height="18"/>
                                                         <buttonCell key="cell" type="check" title="Rotation" bezelStyle="regularSquare" imagePosition="left" inset="2" id="2xd-Po-e6G">
                                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                             <font key="font" metaFont="system"/>
@@ -875,24 +882,16 @@ CA
                                                             <action selector="rotationSwitchValueChanged:" target="XfG-lQ-9wD" id="UWy-aX-4DI"/>
                                                         </connections>
                                                     </button>
-                                                    <slider horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Qql-RB-waT">
-                                                        <rect key="frame" x="221" y="0.0" width="28" height="30"/>
-                                                        <sliderCell key="cell" continuous="YES" alignment="left" maxValue="360" allowsTickMarkValuesOnly="YES" sliderType="circular" id="YOJ-Tl-z2s"/>
-                                                        <connections>
-                                                            <action selector="rotationAngleChanged:" target="XfG-lQ-9wD" id="Keb-u0-OUM"/>
-                                                        </connections>
-                                                    </slider>
-                                                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="oua-ZP-PXY">
-                                                        <rect key="frame" x="251" y="4" width="96" height="21"/>
-                                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="ymL-hh-KhW">
+                                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="z0U-Ho-xyw">
+                                                        <rect key="frame" x="222" y="-3" width="75" height="32"/>
+                                                        <buttonCell key="cell" type="push" title="Reset" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="pkb-vg-QMv">
+                                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                             <font key="font" metaFont="system"/>
-                                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                        </textFieldCell>
+                                                        </buttonCell>
                                                         <connections>
-                                                            <action selector="textChanged:" target="XfG-lQ-9wD" id="p8W-h3-VUj"/>
+                                                            <action selector="resetRotation:" target="XfG-lQ-9wD" id="p0G-bD-tTy"/>
                                                         </connections>
-                                                    </textField>
+                                                    </button>
                                                 </subviews>
                                                 <edgeInsets key="edgeInsets" left="4" right="4" top="0.0" bottom="0.0"/>
                                                 <constraints>
@@ -975,10 +974,9 @@ CA
                         <outlet property="cursorButton" destination="kQX-EK-pxv" id="20O-8g-gKJ"/>
                         <outlet property="deleteButton" destination="hAh-7h-bYE" id="AuG-pM-r4N"/>
                         <outlet property="redoButton" destination="w0p-0e-v3d" id="aOk-LA-l4O"/>
-                        <outlet property="rotationSlider" destination="Qql-RB-waT" id="srr-4H-mVw"/>
+                        <outlet property="rotationResetButton" destination="z0U-Ho-xyw" id="rS1-CS-P6o"/>
                         <outlet property="rotationSwitch" destination="PEO-wa-lY2" id="aqq-A0-P9o"/>
                         <outlet property="tableView" destination="LUD-7e-Ozj" id="b3Z-rG-hA3"/>
-                        <outlet property="textField" destination="oua-ZP-PXY" id="75d-IE-efd"/>
                         <outlet property="undoButton" destination="ibe-4X-wdH" id="1O4-4U-Blb"/>
                     </connections>
                 </viewController>

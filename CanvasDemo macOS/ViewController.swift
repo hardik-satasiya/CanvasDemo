@@ -44,8 +44,7 @@ class ViewController: NSViewController {
     @IBOutlet weak var redoButton: NSButton!
     @IBOutlet weak var colorWell: NSColorWell!
     @IBOutlet weak var rotationSwitch: NSButton!
-    @IBOutlet weak var rotationSlider: NSSlider!
-    @IBOutlet weak var textField: NSTextField!
+    @IBOutlet weak var rotationResetButton: NSButton!
     
     var selectedRow: Int? { tableView.selectedRow != -1 ? tableView.selectedRow : nil }
     var selectedItemIndex: Int? { canvasView.selectedItemIndexes.count == 1 ? canvasView.selectedItemIndexes.first : nil }
@@ -60,28 +59,19 @@ class ViewController: NSViewController {
     func setUpUI() {
         tableView.delegate = self
         tableView.dataSource = self
-        rotationSlider.scaleUnitSquare(to: NSSize(width: -1, height: 1))
-        rotationSlider.rotate(byDegrees: -90)
         canvasView.layer?.backgroundColor = .white
         canvasView.delegate = self
     }
     
     func setUpObservers() {
-        let notCenter = NotificationCenter.default
-        notCenter.addObserver(forName: .canvasViewSessionDidFinish, object: nil, queue: .main) { _ in
-            self.updateUI()
-        }
-        notCenter.addObserver(forName: .canvasViewSessionDidCancel, object: nil, queue: .main) { _ in
-            self.updateUI()
-        }
-        notCenter.addObserver(forName: .canvasViewItemDidEndEditing, object: nil, queue: .main) { _ in
-            self.updateUI()
-        }
-        notCenter.addObserver(forName: .canvasViewSelectionDidChange, object: nil, queue: .main) { _ in
-            self.updateUI()
-        }
-        notCenter.addObserver(forName: .NSUndoManagerCheckpoint, object: nil, queue: .main) { _ in
-            self.updateUI()
+        let notiNames: [Notification.Name] = [
+            .canvasViewSessionDidFinish, .canvasViewSessionDidCancel, .canvasViewItemDidEndEditing, .canvasViewSelectionDidChange,
+            .NSUndoManagerDidUndoChange, .NSUndoManagerDidRedoChange, .NSUndoManagerDidOpenUndoGroup
+        ]
+        notiNames.forEach { name in
+            NotificationCenter.default.addObserver(forName: name, object: nil, queue: .main) { _ in
+                self.updateUI()
+            }
         }
     }
     
@@ -93,16 +83,10 @@ class ViewController: NSViewController {
         if let idx = selectedItemIndex {
             let item = canvasView.items[idx]
             colorWell.color = item.strokeColor
-            rotationSlider.isEnabled = canvasView.canRotateItem
-            rotationSlider.integerValue = Int(radiansToDegrees(item.rotationAngle))
-            textField.isEnabled = item is RectItem
-            textField.stringValue = (item as? RectItem)?.text ?? ""
+            rotationResetButton.isHidden = !canvasView.canRotateItem
         } else {
             colorWell.color = canvasView.strokeColor
-            rotationSlider.isEnabled = false
-            rotationSlider.integerValue = 0
-            textField.isEnabled = false
-            textField.stringValue = ""
+            rotationResetButton.isHidden = true
         }
     }
     
@@ -138,16 +122,9 @@ class ViewController: NSViewController {
         canvasView.canRotateItem = sender.state == .on
     }
     
-    @IBAction func rotationAngleChanged(_ sender: NSSlider) {
+    @IBAction func resetRotation(_ sender: Any) {
         if let idx = selectedItemIndex {
-            let angle = degreesToRadians(CGFloat(sender.integerValue))
-            canvasView.items[idx].rotate(angle)
-        }
-    }
-    
-    @IBAction func textChanged(_ sender: NSTextField) {
-        if let idx = selectedItemIndex, let item = canvasView.items[idx] as? RectItem {
-            item.text = sender.stringValue
+            canvasView.items[idx].rotate(0)
         }
     }
     
