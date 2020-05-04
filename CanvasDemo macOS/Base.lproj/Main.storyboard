@@ -714,13 +714,13 @@
                                 <rect key="frame" x="0.0" y="0.0" width="480" height="372"/>
                                 <subviews>
                                     <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="30" horizontalPageScroll="10" verticalLineScroll="30" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dbr-nl-6dC">
-                                        <rect key="frame" x="0.0" y="131" width="100" height="241"/>
+                                        <rect key="frame" x="0.0" y="137" width="100" height="235"/>
                                         <clipView key="contentView" id="QQu-6r-ab1">
-                                            <rect key="frame" x="0.0" y="0.0" width="100" height="241"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="100" height="235"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" selectionHighlightStyle="none" alternatingRowBackgroundColors="YES" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="29" viewBased="YES" id="LUD-7e-Ozj">
-                                                    <rect key="frame" x="0.0" y="0.0" width="100" height="241"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="100" height="235"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <size key="intercellSpacing" width="3" height="1"/>
                                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -787,7 +787,7 @@
                                         <rect key="frame" x="101" y="0.0" width="379" height="372"/>
                                         <subviews>
                                             <stackView distribution="fill" orientation="horizontal" alignment="centerY" spacing="4" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UDw-EE-9ei">
-                                                <rect key="frame" x="0.0" y="343" width="228" height="29"/>
+                                                <rect key="frame" x="0.0" y="343" width="253" height="29"/>
                                                 <subviews>
                                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="kQX-EK-pxv">
                                                         <rect key="frame" x="4" y="4" width="21" height="21"/>
@@ -882,6 +882,22 @@ CA
                                                             <action selector="rotationSwitchValueChanged:" target="XfG-lQ-9wD" id="UWy-aX-4DI"/>
                                                         </connections>
                                                     </button>
+                                                    <button translatesAutoresizingMaskIntoConstraints="NO" id="bD6-d4-XxV">
+                                                        <rect key="frame" x="228" y="4" width="21" height="21"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="21" id="3nM-M9-BEl"/>
+                                                            <constraint firstAttribute="width" secondItem="bD6-d4-XxV" secondAttribute="height" multiplier="1:1" id="dcb-aU-MaX"/>
+                                                        </constraints>
+                                                        <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="Reset" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="xxz-XZ-LwT">
+                                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                            <font key="font" metaFont="system"/>
+                                                            <string key="keyEquivalent">Z</string>
+                                                            <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                                                        </buttonCell>
+                                                        <connections>
+                                                            <action selector="resetRotation:" target="XfG-lQ-9wD" id="47E-1R-Me8"/>
+                                                        </connections>
+                                                    </button>
                                                 </subviews>
                                                 <edgeInsets key="edgeInsets" left="4" right="4" top="0.0" bottom="0.0"/>
                                                 <constraints>
@@ -895,8 +911,10 @@ CA
                                                     <integer value="1000"/>
                                                     <integer value="1000"/>
                                                     <integer value="1000"/>
+                                                    <integer value="1000"/>
                                                 </visibilityPriorities>
                                                 <customSpacing>
+                                                    <real value="3.4028234663852886e+38"/>
                                                     <real value="3.4028234663852886e+38"/>
                                                     <real value="3.4028234663852886e+38"/>
                                                     <real value="3.4028234663852886e+38"/>
@@ -962,6 +980,7 @@ CA
                         <outlet property="cursorButton" destination="kQX-EK-pxv" id="20O-8g-gKJ"/>
                         <outlet property="deleteButton" destination="hAh-7h-bYE" id="AuG-pM-r4N"/>
                         <outlet property="redoButton" destination="w0p-0e-v3d" id="aOk-LA-l4O"/>
+                        <outlet property="rotationResetButton" destination="bD6-d4-XxV" id="PTg-Mk-ppd"/>
                         <outlet property="rotationSwitch" destination="PEO-wa-lY2" id="aqq-A0-P9o"/>
                         <outlet property="tableView" destination="LUD-7e-Ozj" id="b3Z-rG-hA3"/>
                         <outlet property="undoButton" destination="ibe-4X-wdH" id="1O4-4U-Blb"/>
@@ -976,6 +995,7 @@ CA
         <image name="Cursor" width="50" height="50"/>
         <image name="Delete" width="50" height="50"/>
         <image name="Redo" width="50" height="50"/>
+        <image name="Reset" width="50" height="50"/>
         <image name="Undo" width="50" height="50"/>
     </resources>
 </document>
