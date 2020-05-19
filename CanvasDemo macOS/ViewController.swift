@@ -10,30 +10,6 @@ import Cocoa
 
 import Canvas
 
-enum Shape: String, CaseIterable {
-    case line
-    case polyline
-    case circle
-    case rect
-    case pencil
-    case pencil2
-    case protractor
-    case cirdist
-    
-    func canvasItemType() -> CanvasItem.Type {
-        switch self {
-        case .line:         return LineItem.self
-        case .polyline:     return PolylineItem.self
-        case .circle:       return CircleItem.self
-        case .rect:         return RectItem.self
-        case .pencil:       return PencilItem.self
-        case .pencil2:      return PencilItem2.self
-        case .protractor:   return ProtractorItem.self
-        case .cirdist:      return CirdistItem.self
-        }
-    }
-}
-
 class ViewController: NSViewController {
     
     @IBOutlet weak var tableView: NSTableView!
@@ -87,6 +63,21 @@ class ViewController: NSViewController {
         } else {
             colorWell.color = canvasView.strokeColor
             rotationResetButton.isEnabled = false
+        }
+    }
+    
+    func printCanvasItemInfo(_ item: CanvasItem) {
+        switch item {
+        case let item as DistanceMeasurable:
+            print(item.distances)
+        case let item as CircleMeasurable:
+            print(item.circle)
+        case let item as AngleMeasurable:
+            print(item.angles.map(radiansToDegrees))
+        case let item as SizeMeasurable:
+            print(item.size)
+        default:
+            break
         }
     }
     
@@ -145,6 +136,18 @@ class ViewController: NSViewController {
 
 extension ViewController: CanvasViewDelegate {
     
+    func canvasViewDidFinishSession(_ canvasView: CanvasView, withItemAt index: Int) {
+//        printCanvasItemInfo(canvasView.items[index])
+    }
+    
+    func canvasView(_ canvasView: CanvasView, didEditItemAt index: Int) {
+//        printCanvasItemInfo(canvasView.items[index])
+    }
+    
+    func canvasView(_ canvasView: CanvasView, didEndEditingItemAt index: Int) {
+//        printCanvasItemInfo(canvasView.items[index])
+    }
+    
     func menu(for canvasView: CanvasView) -> NSMenu? {
         let menu = NSMenu()
         let hasItems = !canvasView.items.isEmpty, canUndo = undoManager?.canUndo ?? false, canRedo = undoManager?.canRedo ?? false
@@ -168,15 +171,15 @@ extension ViewController: CanvasViewDelegate {
 
 extension ViewController: NSTableViewDataSource, NSTableViewDelegate {
     
-    func numberOfRows(in tableView: NSTableView) -> Int { Shape.allCases.count }
+    func numberOfRows(in tableView: NSTableView) -> Int { CanvasView.BuiltInItemType.allCases.count }
     
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
         let id = NSUserInterfaceItemIdentifier("Cell")
         let rowView = tableView.makeView(withIdentifier: id, owner: nil) as? CanvasItemCellView
-        let shape = Shape.allCases[row]
-        rowView?.setUp(shape)
+        let item = CanvasView.BuiltInItemType.allCases[row]
+        rowView?.setUp(item)
         rowView?.clickHandler = { [weak self] in
-            self?.canvasView.beginDrawingSession(shape.canvasItemType())
+            self?.canvasView.beginDrawingSession(withBuiltInItem: item)
         }
         return rowView
     }
