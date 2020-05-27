@@ -37,6 +37,7 @@ class ViewController: NSViewController {
         tableView.dataSource = self
         canvasView.layer?.backgroundColor = .white
         canvasView.delegate = self
+        canvasView.scaleTool.value = 0
     }
     
     func setUpObservers() {
@@ -55,7 +56,7 @@ class ViewController: NSViewController {
         deleteButton.isEnabled = !canvasView.selectedItemIndexes.isEmpty
         undoButton.isEnabled = undoManager?.canUndo ?? false
         redoButton.isEnabled = undoManager?.canRedo ?? false
-        rotationSwitch.state = canvasView.canRotateItem ? .on : .off
+        rotationSwitch.state = canvasView.isItemRotatable ? .on : .off
         if let idx = selectedItemIndex {
             let item = canvasView.items[idx]
             colorWell.color = item.strokeColor
@@ -110,7 +111,7 @@ class ViewController: NSViewController {
     }
     
     @IBAction func rotationSwitchValueChanged(_ sender: NSButton) {
-        canvasView.canRotateItem = sender.state == .on
+        canvasView.isItemRotatable = sender.state == .on
     }
     
     @IBAction func resetRotation(_ sender: Any) {

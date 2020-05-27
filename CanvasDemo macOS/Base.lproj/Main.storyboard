@@ -714,13 +714,13 @@
                                 <rect key="frame" x="0.0" y="0.0" width="480" height="372"/>
                                 <subviews>
                                     <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="30" horizontalPageScroll="10" verticalLineScroll="30" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dbr-nl-6dC">
-                                        <rect key="frame" x="0.0" y="137" width="100" height="235"/>
+                                        <rect key="frame" x="0.0" y="141" width="100" height="231"/>
                                         <clipView key="contentView" id="QQu-6r-ab1">
-                                            <rect key="frame" x="0.0" y="0.0" width="100" height="235"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="100" height="231"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" selectionHighlightStyle="none" alternatingRowBackgroundColors="YES" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="29" viewBased="YES" id="LUD-7e-Ozj">
-                                                    <rect key="frame" x="0.0" y="0.0" width="100" height="235"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="100" height="231"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <size key="intercellSpacing" width="3" height="1"/>
                                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
